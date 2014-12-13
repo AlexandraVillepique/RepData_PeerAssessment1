@@ -1,10 +1,4 @@
----
-title: 'Reproducible Research: Peer Assessment 1'
-output:
-  html_document:
-    keep_md: yes
-    toc: yes
----
+# Reproducible Research: Peer Assessment 1
 
 Analysis of daily steps
 =======================
@@ -25,13 +19,15 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
 The procedure used for loading data is:
 
-```{r}
+
+```r
 data=read.csv("activity.csv")
 ```
 
 The procedure used for removing NA values from the data is:
 
-```{r}
+
+```r
 good=complete.cases(data)
 steps<-data$steps[good]
 date<-data$date[good]
@@ -47,20 +43,25 @@ The missing values were ignored.
 
 The total number of steps taken each day is calculated using:
 
-```{r}
+
+```r
 stepsTotal<-aggregate(steps~date, dataComplete, sum)
 ```
 
 which gives us following histogram:
 
-```{r}
+
+```r
 hist(stepsTotal$steps, col="green", breaks=50, main="Total number of steps per day",xlab="Number of steps per day", ylab="Frequency")
 rug(stepsTotal$steps)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
 The mean and median total number of steps were calculated using the following procedures:
 
-```{r}
+
+```r
 stepsMean<-aggregate(steps~date,dataComplete,mean)
 stepsMedian<-aggregate(steps~date,dataComplete,median)
 
@@ -69,31 +70,30 @@ generalMedian<-median(stepsMedian$steps,na.rm=TRUE)
 ```
 
 And give the following results:
-Mean of total number of steps: `r generalMean`.
-Median of total number of steps: `r generalMedian`.
+Mean of total number of steps: 37.3825996.
+Median of total number of steps: 0.
 
 
 ## What is the average daily activity pattern?##
 
 An average daily activity pattern was calculated with following procedure:
 
-```{r}
+
+```r
 stepsInterval<-aggregate(steps~interval,dataComplete,mean)
 ```
 
 And time series plot of the pattern is:
 
-```{r plot, echo=FALSE}
-library(ggplot2)
-qplot(stepsInterval$interval,stepsInterval$steps,geom="path", main="Time Series plot", xlab="Intervals",ylab="Averaged steps")
-```
+![](PA1_template_files/figure-html/plot-1.png) 
 
 NOTE: For correct display of the previous plot, one needs to install ggplot2 package. 
 
 
 Determining which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps required additional processing of the data presented in following code snipet:
 
-```{r}
+
+```r
 dateUnique<-unique(date)
 intervalUnique<-unique(interval)
 stepsAverage<-numeric(length(intervalUnique))
@@ -108,7 +108,7 @@ for (i in dateUnique){
 maxSteps<-intervalAverage$intervalUnique[which.max(intervalAverage$stepsAverage)]
 ```
 
-The interval `r maxSteps` is the one that contains maximum number of steps. The intervals in the dataset correspond to the time in the day expressed in 24 hours format. 
+The interval 835 is the one that contains maximum number of steps. The intervals in the dataset correspond to the time in the day expressed in 24 hours format. 
 
 Thus, observed persons tend to make the maximum number of steps around 8:35 AM. 
 
@@ -117,13 +117,15 @@ Thus, observed persons tend to make the maximum number of steps around 8:35 AM.
 
 The additional analysis was preformed to determine possible influence of the missing values. 
 The total number of missing values in the data set was obtained with:
-```{r}
+
+```r
 numberRowsNA<-length(data$steps)-sum(good)
 ```
-and it's value is: `r numberRowsNA`.
+and it's value is: 2304.
 
 The missing values were exchaned with the average values for the corresponding interval using following code:
-```{r}
+
+```r
 ind<-which(is.na(data$steps))
 dataNoNA<-data
 
@@ -137,28 +139,18 @@ for (i in ind){
 After which the calculations for the mean total number of steps taken per day were repeated on this newly formed dataset.
 The resulting histogram is:
 
-```{r, echo=FALSE}
-stepsTotalNoNA<-aggregate(steps~date, dataNoNA, sum)
-hist(stepsTotalNoNA$steps, col="green", breaks=50, main="Total number of steps per day",xlab="Number of steps per day", ylab="Frequency")
-rug(stepsTotalNoNA$steps)
-```
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
 And results for mean and medium for the new data set are:
 
-```{r, echo=FALSE}
-stepsMeanNoNA<-aggregate(steps~date,dataNoNA,mean)
-stepsMedianNoNA<-aggregate(steps~date,dataNoNA,median)
 
-generalMeanNoNA<-mean(stepsMeanNoNA$steps,na.rm=TRUE)
-generalMedianNoNA<-median(stepsMedianNoNA$steps,na.rm=TRUE)
-```
 
-- Mean for corrected data set: `r generalMeanNoNA`
-- Median for corrected data set: `r generalMedianNoNA`
+- Mean for corrected data set: 37.3825996
+- Median for corrected data set: 0
 
 For the comparison previously callculated results are: 
-- Mean: `r generalMean`.
-- Median: `r generalMedian`.
+- Mean: 37.3825996.
+- Median: 0.
 
 Thus, the conclusion is that missing data does not introduces the bias and can be safely ignored. 
 
@@ -167,7 +159,8 @@ Thus, the conclusion is that missing data does not introduces the bias and can b
 In general, human activity varies between week-days and week-end. Thus analysis was done to establish is that the case with the monitored activity. 
 To preform this analysis a new variable needed to be added, the variable that distinguishes the week-days and weekends. This was acomplished with:
 
-```{r}
+
+```r
 weekday<-weekdays(as.Date(dataComplete$date))
 weekdayLogic<-(weekday=="Saturday") | (weekday=="Sunday")
 dataComplete$weekend<-as.numeric(weekdayLogic)
@@ -175,7 +168,8 @@ dataComplete$weekend<-as.numeric(weekdayLogic)
 
 The calculations for the average daily activity pattern were performed separately for weekdays and weekends.
 
-```{r}
+
+```r
 dataWorkday<-subset(dataComplete,weekend==0)
 dataWeekend<-subset(dataComplete,weekend==1)
 
@@ -184,13 +178,13 @@ stepsIntervalWeekend<-aggregate(steps~interval,dataWeekend,mean)
 ```
 
 Results are presented in following graph:
-```{r, echo=FALSE, fig.width=9.5}
-plot1<-qplot(stepsIntervalWorkday$interval,stepsIntervalWorkday$steps,geom="path", main="Time Series for Work Days", xlab="Intervals",ylab="Averaged steps")
-plot2<-qplot(stepsIntervalWeekend$interval,stepsIntervalWeekend$steps,geom="path", main="Time Series for Weekend", xlab="Intervals",ylab="Averaged steps")
 
-require(gridExtra)
-grid.arrange(plot1,plot2,ncol=2)
 ```
+## Loading required package: gridExtra
+## Loading required package: grid
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
 
 NOTE: For correct display of previous plot, one needs to install gridExtra package. 
 
