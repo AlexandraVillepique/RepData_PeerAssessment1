@@ -90,7 +90,7 @@ And time series plot of the pattern is:
 NOTE: For correct display of the previous plot, one needs to install ggplot2 package. 
 
 
-Determining which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps required additional processing of the data presented in following code snipet:
+Determining which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps required additional processing of the data presented in following code snippet:
 
 
 ```r
@@ -123,7 +123,8 @@ numberRowsNA<-length(data$steps)-sum(good)
 ```
 and it's value is: 2304.
 
-The missing values were exchaned with the average values for the corresponding interval using following code:
+The missing values were exchanged with the average values for the corresponding interval using following code:
+
 
 ```r
 ind<-which(is.na(data$steps))
@@ -145,19 +146,22 @@ And results for mean and medium for the new data set are:
 
 
 
+
 - Mean for corrected data set: 37.3825996
 - Median for corrected data set: 0
 
-For the comparison previously callculated results are: 
+For the comparison previously calculated results are: 
 - Mean: 37.3825996.
 - Median: 0.
+
 
 Thus, the conclusion is that missing data does not introduces the bias and can be safely ignored. 
 
 ## Are there differences in activity patterns between weekdays and weekends?##
 
 In general, human activity varies between week-days and week-end. Thus analysis was done to establish is that the case with the monitored activity. 
-To preform this analysis a new variable needed to be added, the variable that distinguishes the week-days and weekends. This was acomplished with:
+To preform this analysis a new variable needed to be added, the variable that distinguishes the week-days and weekends. This was accomplished with:
+
 
 
 ```r
@@ -188,5 +192,7 @@ Results are presented in following graph:
 
 NOTE: For correct display of previous plot, one needs to install gridExtra package. 
 
-The results show noticable difference in the activity pattern between the weekdays and weekend. This results indicate that the observed person is fully employed, most likely doing sedentary job, and tends to spend leasure time on their feet. 
-As such, this person can be targeted for outdoor product advertizing.
+The results show noticeable difference in the activity pattern between the weekdays and weekend. This results indicate that the observed person is fully employed, most likely doing sedentary job, and tends to spend leisure time on their feet. 
+As such, this person can be targeted for outdoor product advertising.
+
+
