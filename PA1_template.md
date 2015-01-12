@@ -15,7 +15,7 @@ The variables included in this dataset are:
 - date: The date on which the measurement was taken in YYYY-MM-DD format
 - interval: Identifier for the 5-minute interval in which measurement was taken
 
-The dataset is stored in a comma-separated-value (CSV) file and there are a total of 17,568 observations in this dataset.
+The dataset is stored in a comma-separated-value (CSV) file and there are a total of 17,568 observations of 3 variables in this dataset.
 
 The procedure used for loading data is:
 
@@ -151,6 +151,7 @@ And results for mean and medium for the new data set are:
 - Median for corrected data set: 0
 
 For the comparison previously calculated results are: 
+
 - Mean: 37.3825996.
 - Median: 0.
 
@@ -192,7 +193,7 @@ Results are presented in following graph:
 
 NOTE: For correct display of previous plot, one needs to install gridExtra package. 
 
-The results show noticeable difference in the activity pattern between the weekdays and weekend. This results indicate that the observed person is fully employed, most likely doing sedentary job, and tends to spend leisure time on their feet. 
-As such, this person can be targeted for outdoor product advertising.
+The result shows noticeable difference in the activity pattern between the weekdays and weekend. This results indicate that the observed person is fully employed, most likely doing sedentary job, and tends to spend leisure time on their feet. 
+As such, this person can be targeted for outdoor and healty-living product advertising.
 
 
